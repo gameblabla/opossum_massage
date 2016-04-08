@@ -433,6 +433,7 @@ void Load_score()
 		// If the file does not exist then create it
 		file = fopen("./possum.save", "w");
 		highscore = 0;
+		WriteIntLittleEndian((uint32_t)highscore, file);
 	}
 	
 	sprintf(highscore_string, "%d", highscore);
