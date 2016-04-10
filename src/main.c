@@ -285,7 +285,6 @@ void fleche_logic(unsigned short x, unsigned short y)
 		fleche_frame = 0;
 	}
 	
-	//Put_sprite(3, 304, 224, 16, 16, fleche_animation[fleche_frame]);
 	Put_sprite(3, x, y, 16, 16, fleche_animation[fleche_frame]);
 }
 
@@ -347,6 +346,7 @@ void possum_state()
 
 void reset_possum_state(unsigned char mode)
 {
+	srand(time(NULL));
 	possum.state = (mode == 1) ? rand_a_b(0,5) : 0;
 	possum.time_needed = rand_a_b(360,480);
 	possum.time = 0;
