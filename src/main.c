@@ -325,7 +325,8 @@ void Set_Mode(unsigned char mode)
 	{
 		case TITLESCREEN:
 		case GAME:
-			Load_Music("data/volbeat.wav");
+			//Load_Music("data/volbeat.wav");
+			Load_Music("data/volbeat.ogg");
 			Play_Music(1);
 		break;
 		

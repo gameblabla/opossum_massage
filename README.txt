@@ -1,7 +1,7 @@
 __________________________
 Opossum Massage Simulator
 __________________________
-Version 1.1
+Version 1.2
 For TI Nspire CX
 An original game by DJ Omnimaga (It RPG ls!), recreated and ported by gameblabla
 
@@ -12,6 +12,9 @@ The game has 2 modes : Linear Mode and Mood Mode.
 
 In Linear, the game becomes gradually difficult.
 In Mood mode, the possum changes its mood randomly after a certain amount of time.
+
+Sound effects were done by jalastram.
+http://freesound.org/people/jalastram/
 
 _________
 Controls
@@ -24,6 +27,10 @@ ESC  = Quit the game at any time
 _________
 CHANGELOG
 _________
+
+Version 1.2 :
+New text font.
+The story was also slightly edited.
 
 Version 1.1 :
 DJ Omnimaga has finally released the game for TI-84 CSE !
