@@ -14,6 +14,35 @@ and to permit persons to whom the Software is furnished to do so, subject to the
 #include "n2DLib.h"
 #include "graphics.h"
 
+char story_text[3][6][48] =
+{
+	{
+		{"2017 AD"},
+		{"TRUMP IS NOW PRESIDENT OF THE USA."},
+		{"AS PROMISED, HE WILL BAN ALIENS FROM"},
+		{"MURICA."},
+		{""},
+		{""}
+	},
+	{
+		{"ALIENS FELT OFFENDED BY THAT."},
+		{"AFTER MUCH DEBATE,"},
+		{"THE ALIEN ASSEMBLY DECIDED TO INVADE"},
+		{"EARTH AND KILL ALL HUMANS ON IT."},
+		{"EARTH IS NOW IN DANGER."},
+		{"OPOSSUMS ARE OUR ONLY HOPE."}
+	},
+	{
+		{"HOWEVER, OPOSSUMS NEED TO BE MASSAGED"},
+		{"TO REPEL THE ALIENS BACK."},
+		{"PLEASE CHIN,"},
+		{"SAVE OUR GOD, PROTECT MURICA..."},
+		{"FOR GREAT JUSTICE !!!"},
+		{"GOOD LUCK !"}
+	}
+};
+
+
 #define TITLESCREEN 0
 #define STORY 1
 #define GAME 2
@@ -48,6 +77,7 @@ struct title
 	unsigned char mode;
 } titlescreen;
 
+void main_run();
 
 void title_logic();
 void story_logic();
@@ -80,27 +110,12 @@ void Print_text(int x, int y, char *text_ex, unsigned char color)
 	Rect text_rect;
 	int i = 0;
 	text_rect.y = 0;
-	text_rect.w = 6;
-	text_rect.h = 11;
+	text_rect.w = 8;
+	text_rect.h = 8;
 
 	for (i=0;text_ex[i]!='\0';i++)
 	{
 		text_rect.x = (text_ex[i]-33)*text_rect.w;
-		switch(color)
-		{
-			case 0:
-				drawSpritePart(img_font, x + (6 * i), y, &text_rect, 0, 0);
-			break;
-			case 1:
-				drawSpritePart(img_font_blue, x + (6 * i), y, &text_rect, 0, 0);
-			break;
-			case 2:
-				drawSpritePart(img_font_red, x + (6 * i), y, &text_rect, 0, 0);
-			break;
-			case 3:
-				drawSpritePart(img_font_dred, x + (6 * i), y, &text_rect, 0, 0);
-			break;
-		}
-			
+		drawSpritePart(img_font, x + (6 * i), y, &text_rect, 0, 0);
 	}
 }

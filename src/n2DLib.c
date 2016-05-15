@@ -9,12 +9,26 @@ extern "C" {
  *  Buffering  *
  *             */
 
+scr_type_t screen_type;
 unsigned short *BUFF_BASE_ADDRESS, *ALT_SCREEN_BASE_ADDRESS, *INV_BUFF, *temp;
 void *SCREEN_BACKUP;
 int swapped = 0;
+unsigned char new_rev;
 
 void initBuffering()
 {
+	screen_type = lcd_type();
+	lcd_init(screen_type);
+	
+	if (screen_type == SCR_240x320_565)
+	{
+		new_rev = 1;
+	}
+	else
+	{
+		new_rev = 0;
+	}
+	
 	BUFF_BASE_ADDRESS = (unsigned short*)malloc(BUFF_BYTES_SIZE);
 	if(!BUFF_BASE_ADDRESS) exit(0);
 	
@@ -52,16 +66,13 @@ void updateScreen()
 	// I use different methods for refreshing the screen for GS and color screens because according to my tests, the fastest for one isn't the fastest for the other
 	if(has_colors)
 	{
-		dest = (unsigned int*)ALT_SCREEN_BASE_ADDRESS;
-		src = (unsigned int*)BUFF_BASE_ADDRESS;
-		for(i = 0; i < 160 * 240; i++)
-			*dest++ = *src++;
+		lcd_blit(BUFF_BASE_ADDRESS, screen_type);
 	}
 	else
 	{
 		dest = (unsigned int*)INV_BUFF;
 		src = (unsigned int*)BUFF_BASE_ADDRESS;
-		for(i = 0; i < 160 * 240; i++)
+		for(i = 0; i < 38400; i++)
 		{
 			c = *src++;
 			c = ~c;
@@ -343,14 +354,14 @@ int interpolatePathFloat(float _x[], float _y[], int _t[], int nb, Rect *out)
 void clearBufferB()
 {
 	int i;
-	for(i = 0; i < 160 * 240; i++)
+	for(i = 0; i < 38400; i++)
 		((unsigned int*)BUFF_BASE_ADDRESS)[i] = 0;
 }
 
 void clearBufferW()
 {
 	int i;
-	for(i = 0; i < 160 * 240; i++)
+	for(i = 0; i < 38400; i++)
 		((unsigned int*)BUFF_BASE_ADDRESS)[i] = 0xffffffff;
 }
 
@@ -358,7 +369,7 @@ void clearBuffer(unsigned short c)
 {
 	int i;
 	unsigned int ci = (c << 16) | c;
-	for(i = 0; i < 160 * 240; i++)
+	for(i = 0; i < 38400; i++)
 			*((unsigned int*)BUFF_BASE_ADDRESS + i) = ci;
 }
 
@@ -372,19 +383,47 @@ inline unsigned short getPixel(const unsigned short *src, unsigned int x, unsign
 
 inline void setPixelUnsafe(unsigned int x, unsigned int y, unsigned short c)
 {
-	*((unsigned short*)BUFF_BASE_ADDRESS + x + y * 320) = c;
+	switch(new_rev)
+	{
+		case 0:
+			*((unsigned short*)BUFF_BASE_ADDRESS + x + y * 320) = c;
+		break;
+		case 1:
+			*((unsigned short*)BUFF_BASE_ADDRESS + y + x * 240) = c;
+		break;
+	}
 }
 
 inline void setPixel(unsigned int x, unsigned int y, unsigned short c)
 {
 	if(x < 320 && y < 240)
-		*((unsigned short*)BUFF_BASE_ADDRESS + x + y * 320) = c;
+	{
+		switch(new_rev)
+		{
+			case 0:
+				*((unsigned short*)BUFF_BASE_ADDRESS + x + y * 320) = c;
+			break;
+			case 1:
+				*((unsigned short*)BUFF_BASE_ADDRESS + y + x * 240) = c;
+			break;
+		}
+	}
 }
 
 inline void setPixelRGB(unsigned int x, unsigned int y, unsigned char r, unsigned char g, unsigned char b)
 {
 	if(x < 320 && y < 240)
-		*((unsigned short*)BUFF_BASE_ADDRESS + x + y * 320) = ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3);
+	{
+		switch(new_rev)
+		{
+			case 0:
+				*((unsigned short*)BUFF_BASE_ADDRESS + x + y * 320) = ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3);
+			break;
+			case 1:
+				*((unsigned short*)BUFF_BASE_ADDRESS + x + y * 240) = ((r >> 3) << 11) | ((g >> 2) << 5) | (b >> 3);
+			break;
+		}
+	}
 }
 
 void drawHLine(int y, int x1, int x2, unsigned short c)

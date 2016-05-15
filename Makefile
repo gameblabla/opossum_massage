@@ -1,8 +1,9 @@
 CC = gcc
 
-CFLAGS = -g -Wall -Werror -I.
-LDFLAGS = `sdl2-config --cflags --libs` -lSDL2
+CFLAGS = -O0 -g -Wall -Werror -I.
+LDFLAGS = `sdl2-config --cflags --libs` -lSDL2 -lSDL2_mixer
 DEFINES = -Wall -DDEBUG -DJOYSTICK -DSCALING
+DEFINES += -DSOUND_ENABLED
 DEFINES += -DSAVE
 OUTPUT = possum
 

@@ -35,6 +35,34 @@ unsigned char game_mode;
 unsigned char start_pressed;
 unsigned char start_time;
 
+char story_text[3][6][48] =
+{
+	{
+		{"2017 AD"},
+		{"TRUMP IS NOW PRESIDENT OF THE USA."},
+		{"AS PROMISED, HE WILL BAN ALIENS FROM"},
+		{"MURICA."},
+		{""},
+		{""}
+	},
+	{
+		{"ALIENS FELT OFFENDED BY THAT."},
+		{"AFTER MUCH DEBATE,"},
+		{"THE ALIEN ASSEMBLY DECIDED TO INVADE"},
+		{"EARTH AND KILL ALL HUMANS ON IT."},
+		{"EARTH IS NOW IN DANGER."},
+		{"OPOSSUMS ARE OUR ONLY HOPE."}
+	},
+	{
+		{"HOWEVER, OPOSSUMS NEED TO BE MASSAGED"},
+		{"TO REPEL THE ALIENS BACK."},
+		{"PLEASE CHIN,"},
+		{"SAVE OUR GOD, PROTECT MURICA..."},
+		{"FOR GREAT JUSTICE !!!"},
+		{"GOOD LUCK !"}
+	}
+};
+
 struct opossum_
 {
 	unsigned char state;
@@ -48,6 +76,7 @@ struct title
 	unsigned char mode;
 } titlescreen;
 
+void main_run();
 
 void title_logic();
 void story_logic();
@@ -66,21 +95,28 @@ void possum_state();
 void reset_possum_state(unsigned char mode);
 void mode_gameplay(unsigned char mode);
 
+void Set_Mode(unsigned char mode);
+void Set_Titlescreen_state(unsigned char mode);
+
 void show_warn_sign();
 
 #define uint32_t unsigned int
 
+#ifdef SAVE
 uint32_t ReadLongLittleEndian (FILE* output) ;
 void WriteIntLittleEndian (uint32_t long_in, FILE* output);
+#endif
 void Load_score();
 void Save_score();
 
+
+/* Print text on-screen, need Load_font before using this */
 void Print_text(int x, int y, char *text_ex, unsigned char color)
 {
 	int i = 0;
 	for (i=0;text_ex[i]!='\0';i++)
 	{
-		Put_sprite(100+color/*+i*/, x + (6 * i), y, 6, 11, text_ex[i]-33);
+		Put_sprite(100/*+i*/, x + (8 * i), y, 8, 8, text_ex[i]-33);
 	}
 }
 
@@ -88,10 +124,10 @@ void Load_Font()
 {
 	/*int i;*/
 	Load_Image(100,"data/font.bmp");
-	Load_Image(101,"data/font_blue.bmp");
+	/*Load_Image(101,"data/font_blue.bmp");
 	Load_Image(102,"data/font_red.bmp");
 	Load_Image(103,"data/font_dred.bmp");
-	/*for(i=101;i<108;i++)
+	for(i=101;i<120;i++)
 	{
 		Copy_Image(100,i);
 	}*/

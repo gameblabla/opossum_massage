@@ -1,6 +1,6 @@
 CC = i586-mingw32msvc-gcc
 
-CFLAGS = -Os -I. -DJOYSTICK
+CFLAGS = -Os -I. -DJOYSTICK -DSAVE
 LDFLAGS = -lSDL2 -lmingw32 -mwindows
 DEFINES = -Wall -Wl,--as-needed
 OUTPUT = possum.exe

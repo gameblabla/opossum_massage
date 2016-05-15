@@ -1,6 +1,8 @@
 #ifndef INCLUDE_GRAFX
 #define INCLUDE_GRAFX
 
+#include <stdlib.h>
+#include <stdio.h>
 #include <libndls.h>
 #include <stdarg.h>
 
