@@ -3,6 +3,7 @@
 *.tns
 *.dll
 src/*.o
+WRAPPER
 WRAPPER/
 *.o
 *.png
