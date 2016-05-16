@@ -1,7 +1,7 @@
 CC = i586-mingw32msvc-gcc
 
-CFLAGS = -Os -I. -DJOYSTICK -DSAVE
-LDFLAGS = -lSDL2 -lmingw32 -mwindows
+CFLAGS = -Os -I. -DJOYSTICK -DSAVE -DSOUND_ENABLED
+LDFLAGS = -L/usr/i586-mingw32msvc/lib -lSDL2 -lSDL2_mixer -lmingw32 -mwindows
 DEFINES = -Wall -Wl,--as-needed
 OUTPUT = possum.exe
 

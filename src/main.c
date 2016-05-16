@@ -24,29 +24,28 @@ int main ( int argc, char* argv[] )
     Init_video();
 	Init_sound();
 
-    Load_Image(1,"data/title.bmp");
-    Load_Image(2,"data/red.bmp");
-    Load_Image(3,"data/fleche.bmp");
+    Load_Image(1,"./data/title.bmp");
+    Load_Image(2,"./data/red.bmp");
+    Load_Image(3,"./data/fleche.bmp");
    
-    Load_Image(4,"data/story1.bmp");
-    Load_Image(5,"data/story2.bmp");
-    Load_Image(6,"data/story3.bmp");
+    Load_Image(4,"./data/story1.bmp");
+    Load_Image(5,"./data/story2.bmp");
+    Load_Image(6,"./data/story3.bmp");
     
-    Load_Image(7,"data/game.bmp");
-    Load_Image(9,"data/white.bmp");
+    Load_Image(7,"./data/game.bmp");
+    Load_Image(9,"./data/white.bmp");
     
-    Load_Image(11,"data/oldman.bmp");
-    Load_Image(12,"data/go.bmp");
-    Load_Image(13,"data/gameover.bmp");
-    Load_Image(15,"data/warn.bmp");
+    Load_Image(11,"./data/oldman.bmp");
+    Load_Image(12,"./data/go.bmp");
+    Load_Image(13,"./data/gameover.bmp");
+    Load_Image(15,"./data/warn.bmp");
     
-    Load_Image(16,"data/possum.bmp");
+    Load_Image(16,"./data/possum.bmp");
     
-	Load_SFX(0, "data/confirm.wav");
-	Load_SFX(1, "data/cancel.wav");
-	Load_SFX(2, "data/start.wav");
-	Load_SFX(3, "data/warn.wav");
-	Play_Music(1);
+	Load_SFX(0, "./data/confirm.wav");
+	Load_SFX(1, "./data/cancel.wav");
+	Load_SFX(2, "./data/start.wav");
+	Load_SFX(3, "./data/warn.wav");
     
     Load_Font();
     reset_settings();
@@ -325,13 +324,12 @@ void Set_Mode(unsigned char mode)
 	{
 		case TITLESCREEN:
 		case GAME:
-			//Load_Music("data/volbeat.wav");
-			Load_Music("data/volbeat.ogg");
+			Load_Music("./data/volbeat.ogg");
 			Play_Music(1);
 		break;
 		
 		case GAMEOVER:
-			Load_Music("data/gameover.wav");
+			Load_Music("./data/gameover.wav");
 			Play_Music(0);
 		break;
 	}

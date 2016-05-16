@@ -1,0 +1,17 @@
+CC = mipsel-linux-gcc
+
+CFLAGS = -O0 -g -Wall -Werror -I.
+LDFLAGS = -lSDL -lSDL_mixer
+DEFINES += -DSOUND_ENABLED
+DEFINES += -DSAVE
+OUTPUT = possum
+
+SOURCES = src/main.c WRAPPER/GCW.c
+OBJS = ${SOURCES:.c=.o}
+
+${OUTPUT}:${OBJS}
+	${CC} -o ${OUTPUT} ${SOURCES} ${CFLAGS} ${LDFLAGS} ${DEFINES} 
+	
+clean:
+	rm src/*.o
+	rm ${OUTPUT}
