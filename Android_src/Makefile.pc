@@ -1,0 +1,18 @@
+CC = gcc
+
+CFLAGS = -O0 -g -Wall -Werror -I. `sdl2-config --cflags`
+LDFLAGS = `sdl2-config --libs` -lSDL2 -lSDL2_mixer
+DEFINES = -Wall -DDEBUG -DJOYSTICK
+DEFINES += -DSOUND_ENABLED
+DEFINES += -DSAVE
+OUTPUT = possum
+
+SOURCES = main.c wrapper.c
+OBJS = ${SOURCES:.c=.o}
+
+${OUTPUT}:${OBJS}
+	${CC} -o ${OUTPUT} ${OBJS} ${CFLAGS} ${LDFLAGS} ${DEFINES} 
+	
+clean:
+	rm src/*.o
+	rm ${OUTPUT}

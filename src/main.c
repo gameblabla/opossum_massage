@@ -13,15 +13,22 @@ and to permit persons to whom the Software is furnished to do so, subject to the
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <math.h>
 #include <time.h>
+#include <string.h>
+#include <sys/time.h>
+#include <time.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
 
 #include "main.h"
 
 
 int main ( int argc, char* argv[] )
 {
-    Init_video();
+    Init_video(argv);
 	Init_sound();
 
     Load_Image(1,"./data/title.bmp");
@@ -518,7 +525,17 @@ short rand_a_b(short a, short b)
 void Load_score()
 {
 	FILE* file;
-	file = fopen("./possum.save", "r+");
+	char final_path[128];
+	#ifdef GCW0
+		char home_path[128];
+		snprintf(home_path, sizeof(home_path), "%s/.possum", getenv("HOME"));
+		mkdir(home_path, 0755);
+		snprintf(final_path, sizeof(final_path), "%s/possum.save", final_path);
+	#else	
+		snprintf(final_path, sizeof(final_path), "./possum.save");
+	#endif
+	
+		file = fopen(final_path, "r+");
 		
 	if (file)
 	{
@@ -527,7 +544,7 @@ void Load_score()
 	else
 	{
 		// If the file does not exist then create it
-		file = fopen("./possum.save", "w");
+		file = fopen(final_path, "w");
 		highscore = 0;
 		WriteIntLittleEndian((uint32_t)highscore, file);
 	}
@@ -540,7 +557,17 @@ void Load_score()
 void Save_score()
 {
 	FILE* file;
-	file = fopen("./possum.save", "w+");
+	char final_path[128];
+	#ifdef GCW0
+		char home_path[128];
+		snprintf(home_path, sizeof(home_path), "%s/.possum", getenv("HOME"));
+		mkdir(home_path, 0755);
+		snprintf(final_path, sizeof(final_path), "%s/possum.save", final_path);
+	#else	
+		snprintf(final_path, sizeof(final_path), "./possum.save");
+	#endif
+	
+	file = fopen(final_path, "w+");
 	
 	WriteIntLittleEndian((uint32_t)highscore, file);
 		

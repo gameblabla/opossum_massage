@@ -1,6 +1,6 @@
 CC = mipsel-linux-gcc
 
-CFLAGS = -O0 -g -Wall -Werror -I.
+CFLAGS = -O3 -mips32r2 -Wall -Werror -I. -DGCW0
 LDFLAGS = -lSDL -lSDL_mixer
 DEFINES += -DSOUND_ENABLED
 DEFINES += -DSAVE

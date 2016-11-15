@@ -116,7 +116,7 @@ void Print_text(int x, int y, char *text_ex, unsigned char color)
 	int i = 0;
 	for (i=0;text_ex[i]!='\0';i++)
 	{
-		Put_sprite(100/*+i*/, x + (8 * i), y, 8, 8, text_ex[i]-33);
+		Put_sprite(100, x + (8 * i), y, 8, 8, text_ex[i]-33);
 	}
 }
 

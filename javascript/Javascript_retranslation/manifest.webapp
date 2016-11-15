@@ -1,0 +1,20 @@
+{
+  "version": "1.02",
+  "name": "KillMinds",
+  "launch_path": "/index.html",
+  "description": "A unique puzzle game",
+  "icons": {
+    "128": "/128.png"
+  },
+  "developer": {
+    "name": "Gameblabla",
+    "url": "https://gameblabla.nl"
+  },
+  "installs_allowed_from": [
+    "*"
+  ],
+  "orientation": [ "portrait" ],
+  "default_locale": "en",
+  "fullscreen": "true",
+  "permissions": {}
+}
