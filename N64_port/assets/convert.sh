@@ -1,0 +1,13 @@
+./mksprite 16 1 1 title.png title.sprite
+./mksprite 16 1 1 go.png go.sprite
+./mksprite 16 1 1 game.png game.sprite
+./mksprite 16 1 1 gameover.png gameover.sprite
+./mksprite 16 1 1 white.png white.sprite
+./mksprite 16 1 1 story1.png story1.sprite
+./mksprite 16 1 1 story2.png story2.sprite
+./mksprite 16 1 1 story3.png story3.sprite
+./mksprite 16 1 1 possum.png possum.sprite
+./mksprite 16 59 1 font.png font.sprite
+./mksprite 16 2 1 warn.png warn.sprite
+./mksprite 16 4 1 fleche.png fleche.sprite
+./mksprite 16 2 1 oldman.png oldman.sprite
