@@ -13,6 +13,7 @@ and to permit persons to whom the Software is furnished to do so, subject to the
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <time.h>
 #include <malloc.h>
@@ -23,15 +24,17 @@ and to permit persons to whom the Software is furnished to do so, subject to the
 
 #include "main.h"
 
-struct controller_data keys_down;
-struct controller_data keys;
+static struct controller_data keys_down;
+static struct controller_data keys;
 
-gamma_t gamma_select;
-antialias_t aa_select;
-int gamma_option = 0, aa_option = 0, selection_option = 0;
-display_context_t disp = 0;
+static sprite_t* sprites[14];
 
-audio_t *g_audio = NULL;
+static gamma_t gamma_select;
+static antialias_t aa_select;
+static int gamma_option = 0, aa_option = 0, selection_option = 0;
+static display_context_t disp = 0;
+
+static audio_t *g_audio = NULL;
 
 int main(void)
 {	
@@ -39,11 +42,11 @@ int main(void)
     init_interrupts();
 
     /* Initialize peripherals */
-    display_init( RESOLUTION_320x240, DEPTH_16_BPP, 2, GAMMA_NONE, ANTIALIAS_OFF );
+    display_init( RESOLUTION_320x240, DEPTH_16_BPP, 2, GAMMA_NONE, ANTIALIAS_RESAMPLE );
     dfs_init( DFS_DEFAULT_LOCATION );
-    rdp_init();
+    //rdp_init();
     controller_init();
-    timer_init();
+    //timer_init();
     
 	Load_Picture("/fleche.sprite",1);
 	Load_Picture("/oldman.sprite",7);
@@ -75,8 +78,6 @@ int main(void)
         /* Grab a render buffer */
         while( !(disp = display_lock()) )
         {}
-        
-        graphics_fill_screen( disp, 0 );
         
 		main_run();
 		
@@ -124,8 +125,8 @@ void title_logic()
 	graphics_draw_sprite(disp, 0, 0, sprites[0]);
 	graphics_draw_sprite_trans(disp, 112, 112, sprites[11]);
 	
-	Print_text(2, 212, "COPYWRONG 2016");
-	Print_text(2, 224, "DJ OMNIMAGA, GAMEBLABLA");
+	Print_text(10, 212, "COPYWRONG 2016");
+	Print_text(10, 224, "DJ OMNIMAGA, GAMEBLABLA");
 	
 	Print_text(240, 212, "HISCORE");
 	Print_text(240, 224, highscore_string);	
@@ -150,7 +151,7 @@ void title_logic()
 		case 1:
 			Print_text(136, 148, "MOOD MODE");
 			Print_text(136, 164, "LINEAR MODE");
-			Print_text(136, 180, "OPTIONS");
+			//Print_text(136, 180, "OPTIONS");
 			
 			fleche_logic(112,146 + (titlescreen.mode * 14));
 			
@@ -162,7 +163,7 @@ void title_logic()
 			else if (keys_down.c[0].down || (keys_down.c[0].y < -64)) 
 			{
 				titlescreen.mode++;
-				if (titlescreen.mode > 2) titlescreen.mode = 2;
+				if (titlescreen.mode > 1) titlescreen.mode = 1;
 			}
 			
 			if (keys_down.c[0].start || keys_down.c[0].A)
@@ -298,7 +299,7 @@ void story_logic()
 		graphics_draw_sprite(disp, 0, 0, sprites[0]);
 		for (i=0;i<6;i++)
 		{
-			Print_text(4+story_x, 162+(i*12), story_text[image_story][i]);
+			Print_text(12+story_x, 162+(i*12), story_text[image_story][i]);
 		}
 	}
 	
@@ -649,7 +650,7 @@ void Load_Picture(const char* path, unsigned char a)
 	
 	fp = dfs_open(path);
     sprites[a] = malloc( dfs_size( fp ) );
-    dfs_read( sprites[a], 1, dfs_size( fp ), fp );
+    dfs_read( sprites[a], sizeof(uint8_t), dfs_size( fp ), fp );
     dfs_close( fp );
 }
 

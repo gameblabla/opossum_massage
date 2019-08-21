@@ -102,7 +102,6 @@ void show_warn_sign();
 void Load_score();
 void Save_score();
 
-sprite_t* sprites[14];
 void Load_Font();
 
 void Print_text(int x, int y, const char *text_ex);
